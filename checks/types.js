@@ -1,6 +1,7 @@
 const types = {
     sqs: {
         Type: 'AWS::SQS::Queue',
+        required: [],
         props: [
             'ContentBasedDeduplication',
             'DelaySeconds',
@@ -18,6 +19,14 @@ const types = {
     },
     cloudwatch: {
         Type: 'AWS::CloudWatch::Alarm',
+        required: [
+            'ComparisonOperator',
+            'EvaluationPeriods',
+            'MetricName',
+            'Namespace',
+            'Period',
+            'Threshold'
+        ],
         props: [
             'ActionsEnabled',
             'AlarmActions',
@@ -41,6 +50,10 @@ const types = {
     },
     lambda: {
         Type: 'AWS::Serverless::Function',
+        required: [
+            'Handler',
+            'Runtime'
+        ],
         props: [
             'AutoPublishAlias',
             'Code',
