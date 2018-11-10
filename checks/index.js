@@ -89,6 +89,28 @@ const checkCloudWatch = (json) => {
   return {};
 }
 
+const checkLambda = (json) => {
+  const { Lambda } = config.resourcePatterns;
+  const pattern = new RegExp(Lambda);
+  const { Resources } = json;
+  let filteredNames = [];
+  Object.keys(Resources).forEach((key, val) => {
+    if(pattern.test(key)) {
+      filteredNames.push(key);
+    }
+  })
+  if (filteredNames.length > 0) {
+    if (!checkType('lambda', filteredNames, Resources)) {
+      return { message: 'Invalid Lambda type'};
+    }
+    cp = checkProps('lambda', filteredNames, Resources);
+    if (typeof cp !== null) {
+      return cp;
+    }
+  }
+  return {};
+}
+
 const checkType = (resource, names, resources) => {
   let valid = true;
   names.forEach((key, val) => {
@@ -125,7 +147,8 @@ const checks = [
   checkTransform,
   checkMappings,
   checkSQS,
-  checkCloudWatch
+  checkCloudWatch,
+  checkLambda
 ];
 
 module.exports = { checks };

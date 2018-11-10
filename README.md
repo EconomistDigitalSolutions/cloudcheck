@@ -27,6 +27,9 @@ resource to ensure the property names are valid.
 * ```npm run check samples/invalid/template-invalid-cloudwatch-prop1.yml```
 * ```npm run check samples/invalid/template-invalid-cloudwatch-prop2.yml```
 * ```npm run check samples/invalid/template-invalid-cloudwatch-type.yml```
+* ```npm run check samples/invalid/template-invalid-lambda-prop1.yml```
+* ```npm run check samples/invalid/template-invalid-lambda-prop2.yml```
+* ```npm run check samples/invalid/template-invalid-lambda-type.yml```
 
 #### TODO
 

@@ -1,0 +1,185 @@
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SAM configuration for Content Platform event messages lambda
+Mappings:
+  envMap:
+    '680545668187':
+      environment: stage
+      vpc: vpc-d375eab6
+      shortCode: s
+      elbSubnets: subnet-39a46312,subnet-35da6142,subnet-e74068be
+      ec2Subnets: subnet-24a4630f,subnet-37da6140,subnet-e24068bb
+      keyName: suse1
+      sourceVpce: vpce-b1ec28d8
+      version: v1
+      splunkIndex: stage
+    '496098006106':
+      environment: prod
+      vpc: vpc-0173ec64
+      shortCode: p
+      elbSubnets: subnet-8bdb60fc,subnet-e5a562ce
+      ec2Subnets: subnet-e7a562cc,subnet-89db60fe
+      keyName: puse1
+      sourceVpce: vpce-2250944b
+      version: v1
+      splunkIndex: main
+Parameters:
+  LambdaName:
+    Type: String
+    Default: cp-lambda-event-messages
+    Description: Unique name for lambda instance
+  BucketStackName:
+    Type: String
+    Default: suse1-ecom-s3-buckets
+    Description: Name of stack for the bucket
+  CreateEventSNSTopic:
+    Type: String
+    Default: AssetsSNSFileEvent
+    Description: SNS Topic for the create event on an S3 bucket
+  EnvelopeSNSTopic:
+    Type: String
+    Default: suse1-ecom-assets-envelope-event
+    Description: The SNS topic for the Envelope Wrapper where the lambda publishes to
+  AlarmTopicStackName:
+    Type: String
+    Default: suse1-cp-alerts-stack
+    Description: Name of stack holding SNS topics for alarms to publish to
+  AlarmTopicLambdaDLQ:
+    Type: String
+    Default: AlarmTopicLambdaDLQ
+    Description: Name of SNS topic topics for alarms to publish to
+Resources:
+  EnvelopeSQSDeadLetter:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName:
+        Fn::Join:
+        - ''
+        - - Fn::FindInMap:
+            - envMap
+            - Ref: AWS::AccountId
+            - shortCode
+          - use1-ecom-
+          - Ref: LambdaName
+          - "-deadletter"
+      DelaySeconds: 0
+      MaximumMessageSize: 262144
+      MessageRetentionPeriod: 345600
+      ReceiveMessageWaitTimeSeconds: 20
+  DeadLetterAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      Namespace: "AWS/SQS"
+      MetricName: "ApproximateNumberOfMessagesVisible"
+      Dimensions:
+        -
+          Name: "QueueName"
+          Value:
+            !GetAtt EnvelopeSQSDeadLetter.QueueName
+      Statistic: "Sum"
+      Period: "300"
+      EvaulationPeriods: "1"
+      Threshold: "1"
+      ComparisonOperator: "GreaterThanThreshold"
+      AlarmActions:
+        -
+          Fn::ImportValue:
+            Fn::Join:
+            - ''
+            - - !Sub ${AlarmTopicStackName}
+              - "-"
+              - !Sub ${AlarmTopicLambdaDLQ}
+              - "-Arn"
+      InsufficientDataActions:
+        -
+          Fn::ImportValue:
+            Fn::Join:
+            - ''
+            - - !Sub ${AlarmTopicStackName}
+              - "-"
+              - !Sub ${AlarmTopicLambdaDLQ}
+              - "-Arn"
+  EnvelopeFunction:
+    Type: 'AWS::Serverless::Lambda'
+    FunctionName:
+      Fn::Join:
+      - ''
+      - - 'envelope-${LambdaName}-'
+        - Fn::FindInMap: [ envMap, !Ref 'AWS::AccountId', environment ]
+    Description: Lambda that processes SNS broadcast events messages from S3
+    Properties:
+      Runtime: nodejs6.10
+      Timeout: 180
+      Handler: index.handler
+      DeadLetterQueue:
+        Type: SQS
+        TargetArn: !GetAtt EnvelopeSQSDeadLetter.Arn
+      Policies:
+        - S3ReadPolicy:
+            BucketName:
+              Fn::Join:
+              - ''
+              - - !FindInMap [ envMap, !Ref 'AWS::AccountId', shortCode ]
+                - use1-ecom-assets
+      Environment:
+        Variables:
+          ENVELOPE_SNS: !Ref EnvelopeSNS
+          CREATE_EVENT_SNS:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:sns:'
+              - !Ref 'AWS::Region'
+              - ':'
+              - !Ref 'AWS::AccountId'
+              - ':'
+              - !Sub ${CreateEventSNSTopic}
+      CodeUri: ../../../lambda/envelope
+      Events:
+        SNSTopic:
+          Type: SNS
+          Properties:
+            Topic:
+              Fn::ImportValue:
+                Fn::Join:
+                - ''
+                - - !Sub ${BucketStackName}
+                  - "-"
+                  - !Sub ${CreateEventSNSTopic}
+                  - "-Arn"
+  EnvelopeSNS:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: EnvelopeSNS
+      TopicName:
+        Ref: EnvelopeSNSTopic
+  EnvelopeSNSPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Sid: PolicyOwner
+          Effect: Allow
+          Principal: '*'
+          Action:
+          - sns:Publish
+          - sns:Subscribe
+          - sns:SetTopicAttributes
+          - sns:GetTopicAttributes
+          Resource:
+            Ref: EnvelopeSNS
+        - Sid: PolicyPublic
+          Effect: Allow
+          Principal: '*'
+          Action:
+          - sns:Subscribe
+          - sns:Publish
+          Resource: '*'
+      Topics:
+        - Ref: EnvelopeSNS
+Outputs:
+  EnvelopeSNSArn:
+    Value: !Ref EnvelopeSNS
+    Export:
+      Name: !Sub ${AWS::StackName}-EnvelopeSNS-Arn
