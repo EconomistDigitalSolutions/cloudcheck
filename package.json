@@ -1,13 +1,18 @@
 {
   "name": "cloudcheck",
   "version": "1.0.0",
-  "description": "",
+  "description": "A package for checking validity of Content Platform SAM and CloudFormation templates",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/EconomistDigitalSolutions/cloudcheck.git"
+  },
   "main": "index.js",
   "scripts": {
+    "check": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "davegoodchild@economist.co,",
   "license": "ISC",
   "dependencies": {
     "colours": "^0.6.0-2",

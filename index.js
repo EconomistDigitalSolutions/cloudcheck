@@ -3,7 +3,10 @@ const { exec } = require('child_process');
 
 let path = process.argv[2];
    
-if (!path) throw new Error('provide path to yaml file');
+if (!path) {
+  console.log('please provide a path to the template');
+  process.exit();
+}
 
 const { checks } = require('./checks');
 
