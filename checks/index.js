@@ -4,6 +4,7 @@ const fs = require('fs');
 const colours = require('colours');
 
 const config = require('../config.json');
+const types = require('./types');
 
 const checkMappings = (json) => {
   const {
@@ -39,6 +40,51 @@ const checkMappings = (json) => {
   return {};
 }
 
+const checkSQS = (json) => {
+  const { SQS } = config.resourcePatterns;
+  const pattern = new RegExp(SQS);
+  const { Resources } = json;
+  let filteredNames = [];
+  Object.keys(Resources).forEach((key, val) => {
+    if(pattern.test(key)) {
+      filteredNames.push(key);
+    }
+  })
+  if (filteredNames.length > 0) {
+    if (checkType('sqs', filteredNames, Resources)) {
+      return { message: 'Invalid SQS type'};
+    }
+    if (!checkProps('sqs', filteredNames, Resources)) {
+      return { message: 'Invalid SQS property'};
+    }
+  }
+  return {};
+}
+
+const checkType = (resource, names, resources) => {
+  let valid = true;
+  names.forEach((key, val) => {
+    if (resources[key].Type !== types[resource].Type) {
+      valid = false;
+    }
+  });
+  return valid;
+}
+
+const checkProps = (resource, names, resources) => {
+  let valid = true;
+  const { props } = types[resource];
+  names.forEach((key, val) => {
+    const keys = Object.keys(resources[key].Properties);
+    keys.forEach((key, val) => {
+      if (!_.includes(props, key)) {
+      valid = false;
+      }
+    });
+  });
+  return valid;
+} 
+
 const checkTransform = (json) => {
   const HeaderTransform = 'AWS::Serverless-2016-10-31';
   const { Transform } = json;
@@ -46,6 +92,6 @@ const checkTransform = (json) => {
   return Transform != HeaderTransform ? result : {}
 }
 
-const checks = [checkTransform, checkMappings];
+const checks = [checkTransform, checkMappings, checkSQS];
 
 module.exports = { checks };
