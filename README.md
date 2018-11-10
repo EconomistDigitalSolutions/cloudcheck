@@ -18,6 +18,7 @@ resource to ensure the property names are valid.
 
 #### TEST PAYLOADS
 
+* ```npm run check samples/invalid/template-invalid-transform.json```
 * ```npm run check samples/valid/template.yml```
 * ```npm run check samples/invalid/template-invalid-mappings.json```
 * ```npm run check samples/invalid/template-invalid-sqs-prop1.yml```
