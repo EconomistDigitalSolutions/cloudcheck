@@ -11,11 +11,11 @@ easily missed and you won't know until stack build time.
 
 #### TEST PAYLOADS
 
-* ```node index.js samples/valid/template.yml```
-* ```node index.js samples/invalid/template-invalid-mappings.json```
-* ```node index.js samples/invalid/template-invalid-sqs-prop1.yml```
-* ```node index.js samples/invalid/template-invalid-sqs-prop2.yml```
-* ```node index.js samples/invalid/template-invalid-sqs-type.yml```
+* ```npm run check samples/valid/template.yml```
+* ```npm run check samples/invalid/template-invalid-mappings.json```
+* ```npm run check samples/invalid/template-invalid-sqs-prop1.yml```
+* ```npm run check samples/invalid/template-invalid-sqs-prop2.yml```
+* ```npm run check samples/invalid/template-invalid-sqs-type.yml```
 
 #### TODO
 
