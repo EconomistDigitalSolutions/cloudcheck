@@ -4,6 +4,13 @@ A package for checking validity of Content Platform SAM and CloudFormation templ
 pre-commit hook checks to validate these templates on a basic level (YAML format etc) but typos in property names etc are costly as they are
 easily missed and you won't know until stack build time.
 
+You can see how wanting the basic tools are:
+
+```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
+```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
+
+...which both report the template with an invalid property name as being invalid.
+
 The package does a number of things so far:
 
 * Checks the ```Mappings``` section to ensure it
