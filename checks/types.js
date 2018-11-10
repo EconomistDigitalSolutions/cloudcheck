@@ -2,15 +2,15 @@ const types = {
     sqs: {
         Type: "AWS::SQS::Queue",
         props: [
-            "QueueName",
+            "ContentBasedDeduplication",
             "DelaySeconds",
+            "FifoQueue",
+            "KmsDataKeyReusePeriodSeconds",
+            "KmsMasterKeyId",
             "MaximumMessageSize",
             "MessageRetentionPeriod",
+            "QueueName",
             "ReceiveMessageWaitTimeSeconds",
-            "ContentBasedDeduplication",
-            "FifoQueue",
-            "KmsMasterKeyId",
-            "KmsDataKeyReusePeriodSeconds",
             "RedrivePolicy",
             "Tags",
             "VisibilityTimeout"
@@ -19,16 +19,24 @@ const types = {
     cloudwatch: {
         Type: "AWS::CloudWatch::Alarm",
         props: [
-            "Namespace",
-            "MetricName",
-            "Dimensions",
-            "Statistic",
-            "Period",
-            "EvaulationPeriods",
-            "Threshold",
-            "ComparisonOperator",
+            "ActionsEnabled",
             "AlarmActions",
-            "InsufficientDataActions"
+            "AlarmDescription",
+            "AlarmName",
+            "ComparisonOperator",
+            "DatapointsToAlarm",
+            "Dimensions",
+            "EvaluateLowSampleCountPercentile",
+            "EvaulationPeriods",
+            "ExtendedStatistic",
+            "InsufficientDataActions",
+            "MetricName",
+            "Namespace",
+            "OKActions",
+            "Period",
+            "Statistic",
+            "Threshold",
+            "Unit"
         ]
     }
 }

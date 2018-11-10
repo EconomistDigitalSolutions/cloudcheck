@@ -107,7 +107,7 @@ const checkProps = (resource, names, resources) => {
     const keys = Object.keys(resources[key].Properties);
     keys.forEach((key, val) => {
       if (!_.includes(props, key)) {
-        result = { message: `Invalid key: ${ key }`};
+        result = { message: `Invalid ${ resource } key: ${ key }`};
       }
     });
   });
