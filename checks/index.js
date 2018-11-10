@@ -16,7 +16,7 @@ const checkMappings = (json) => {
   const { Mappings } = json;
   const { envMap } = Mappings;
   if (!_.isEqual(envMap[stageAccount], stageMap)) {
-      const d = diff.diffChars(JSON.stringify(envMap[stageAcount]), JSON.stringify(stageMap));
+      const d = diff.diffChars(JSON.stringify(envMap[stageAccount]), JSON.stringify(stageMap));
       d.forEach(function(part){
         // green for additions, red for deletions
         // grey for common parts
@@ -24,6 +24,7 @@ const checkMappings = (json) => {
           part.removed ? 'red' : 'grey';
         process.stderr.write(part.value[color]);
       });
+      process.stderr.write('\n');
       return { message: "Mappings invalid - stage settings are wrong" }
   }
   if (!_.isEqual(envMap[prodAccount], prodMap)) {
@@ -35,6 +36,7 @@ const checkMappings = (json) => {
         part.removed ? 'red' : 'grey';
       process.stderr.write(part.value[color]);
     });
+    process.stderr.write('\n');
     return { message: "Mappings invalid - prod settings are wrong" }
 }
   return {};
@@ -51,11 +53,12 @@ const checkSQS = (json) => {
     }
   })
   if (filteredNames.length > 0) {
-    if (checkType('sqs', filteredNames, Resources)) {
+    if (!checkType('sqs', filteredNames, Resources)) {
       return { message: 'Invalid SQS type'};
     }
-    if (!checkProps('sqs', filteredNames, Resources)) {
-      return { message: 'Invalid SQS property'};
+    cp = checkProps('sqs', filteredNames, Resources);
+    if (typeof cp !== null) {
+      return cp;
     }
   }
   return {};
@@ -73,16 +76,17 @@ const checkType = (resource, names, resources) => {
 
 const checkProps = (resource, names, resources) => {
   let valid = true;
+  let result = null;
   const { props } = types[resource];
   names.forEach((key, val) => {
     const keys = Object.keys(resources[key].Properties);
     keys.forEach((key, val) => {
       if (!_.includes(props, key)) {
-      valid = false;
+        result = { message: `Invalid key: ${ key }`};
       }
     });
   });
-  return valid;
+  return result;
 } 
 
 const checkTransform = (json) => {

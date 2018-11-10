@@ -19,15 +19,10 @@ fs.readFile(path, 'utf8', function (err, data) {
       const json = JSON.parse(flipped);
       checks.forEach((check,index )=> { 
         let result = check(json);
-        if (result.message) {
-            console.log('INVALID TEMPLATE');
-            console.log(result.message);
-        } 
-      })  
+        if (result && result.message) {
+          console.log('INVALID TEMPLATE');
+          console.log(result.message);
+        }        
+      });  
     });
   });
-
-  
-
-
- 
