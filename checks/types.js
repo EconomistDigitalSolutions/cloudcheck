@@ -42,10 +42,12 @@ const types = {
     lambda: {
         Type: 'AWS::Serverless::Function',
         props: [
+            'AutoPublishAlias',
             'Code',
             'CodeUri',
             'DeadLetterConfig',
             'DeadLetterQueue',
+            'DeploymentPreference',
             'Description',
             'Environment',
             'Events',
@@ -59,6 +61,7 @@ const types = {
             'Runtime',
             'Tags',
             'Timeout',
+            'Tracing',
             'TracingConfig',
             'VpcConfig'
         ]
