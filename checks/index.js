@@ -102,7 +102,9 @@ const checkProps = (resource, names, resources) => {
     if (result && result.message) return result;
     const is = _.intersectionWith(keys, required, _.isEqual);
     if (is.length != required.length) {
+        console.log('field supplied in template:'.green);
         console.log(is);
+        console.log('required fields:'.red);
         console.log(required);
         result = { message: `Missing required ${ resource } keys`};
     }
