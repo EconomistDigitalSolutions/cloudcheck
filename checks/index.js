@@ -21,8 +21,6 @@ const checkMappings = (json) => {
   if (!_.isEqual(envMap[stageAccount], stageMap)) {
       const d = diff.diffChars(JSON.stringify(envMap[stageAccount]), JSON.stringify(stageMap));
       d.forEach(function(part){
-        // green for additions, red for deletions
-        // grey for common parts
         var color = part.added ? 'green' :
           part.removed ? 'red' : 'grey';
         process.stderr.write(part.value[color]);
@@ -33,8 +31,6 @@ const checkMappings = (json) => {
   if (!_.isEqual(envMap[prodAccount], prodMap)) {
     const d = diff.diffChars(JSON.stringify(envMap[prodAccount]), JSON.stringify(prodMap));
     d.forEach(function(part){
-      // green for additions, red for deletions
-      // grey for common parts
       var color = part.added ? 'green' :
         part.removed ? 'red' : 'grey';
       process.stderr.write(part.value[color]);
@@ -48,50 +44,22 @@ const checkMappings = (json) => {
 const checkSQS = (json) => {
   const { SQS } = config.resourcePatterns;
   const pattern = new RegExp(SQS);
-  const { Resources } = json;
-  let filteredNames = [];
-  Object.keys(Resources).forEach((key, val) => {
-    if(pattern.test(key)) {
-      filteredNames.push(key);
-    }
-  })
-  if (filteredNames.length > 0) {
-    if (!checkType('sqs', filteredNames, Resources)) {
-      return { message: 'Invalid SQS type'};
-    }
-    cp = checkProps('sqs', filteredNames, Resources);
-    if (typeof cp !== null) {
-      return cp;
-    }
-  }
-  return {};
+  return runChecks('sqs', SQS, pattern, json) || {};  
 }
 
 const checkCloudWatch = (json) => {
   const { CloudWatch } = config.resourcePatterns;
   const pattern = new RegExp(CloudWatch);
-  const { Resources } = json;
-  let filteredNames = [];
-  Object.keys(Resources).forEach((key, val) => {
-    if(pattern.test(key)) {
-      filteredNames.push(key);
-    }
-  })
-  if (filteredNames.length > 0) {
-    if (!checkType('cloudwatch', filteredNames, Resources)) {
-      return { message: 'Invalid CloudWatch type'};
-    }
-    cp = checkProps('cloudwatch', filteredNames, Resources);
-    if (typeof cp !== null) {
-      return cp;
-    }
-  }
-  return {};
+  return runChecks('cloudwatch', CloudWatch, pattern, json) || {}; 
 }
 
 const checkLambda = (json) => {
   const { Lambda } = config.resourcePatterns;
   const pattern = new RegExp(Lambda);
+  return runChecks('lambda', Lambda, pattern, json) || {}; 
+}
+
+const runChecks = (name, resource, pattern, json) => {
   const { Resources } = json;
   let filteredNames = [];
   Object.keys(Resources).forEach((key, val) => {
@@ -100,15 +68,14 @@ const checkLambda = (json) => {
     }
   })
   if (filteredNames.length > 0) {
-    if (!checkType('lambda', filteredNames, Resources)) {
-      return { message: 'Invalid Lambda type'};
+    if (!checkType(name, filteredNames, Resources)) {
+      return { message: `Invalid ${ name } type`};
     }
-    cp = checkProps('lambda', filteredNames, Resources);
+    cp = checkProps(name, filteredNames, Resources);
     if (typeof cp !== null) {
       return cp;
     }
   }
-  return {};
 }
 
 const checkType = (resource, names, resources) => {
