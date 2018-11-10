@@ -51,7 +51,7 @@ Parameters:
     Description: Name of SNS topic topics for alarms to publish to
 Resources:
   EnvelopeSQSDeadLetter:
-    Type: AWS::SQS::ueue
+    Type: AWS::SQS::Queue
     Properties:
       QueueName:
         Fn::Join:
@@ -111,7 +111,6 @@ Resources:
     Properties:
       Runtime: nodejs6.10
       Timeout: 180
-      Handler: index.handler
       DeadLetterQueue:
         Type: SQS
         TargetArn: !GetAtt EnvelopeSQSDeadLetter.Arn

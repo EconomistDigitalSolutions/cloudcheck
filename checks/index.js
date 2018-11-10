@@ -91,7 +91,7 @@ const checkType = (resource, names, resources) => {
 const checkProps = (resource, names, resources) => {
   let valid = true;
   let result = null;
-  const { props } = types[resource];
+  const { props, required } = types[resource];
   names.forEach((key, val) => {
     const keys = Object.keys(resources[key].Properties);
     keys.forEach((key, val) => {
@@ -99,6 +99,13 @@ const checkProps = (resource, names, resources) => {
         result = { message: `Invalid ${ resource } key: ${ key }`};
       }
     });
+    if (result && result.message) return result;
+    const is = _.intersectionWith(keys, required, _.isEqual);
+    if (is.length != required.length) {
+        console.log(is);
+        console.log(required);
+        result = { message: `Missing required ${ resource } keys`};
+    }
   });
   return result;
 } 

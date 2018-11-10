@@ -36,7 +36,7 @@ const types = {
             'DatapointsToAlarm',
             'Dimensions',
             'EvaluateLowSampleCountPercentile',
-            'EvaulationPeriods',
+            'EvaluationPeriods',
             'ExtendedStatistic',
             'InsufficientDataActions',
             'MetricName',
