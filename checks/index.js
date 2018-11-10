@@ -26,7 +26,7 @@ const checkMappings = (json) => {
         process.stderr.write(part.value[color]);
       });
       process.stderr.write('\n');
-      return { message: "Mappings invalid - stage settings are wrong" }
+      return { message: 'Mappings invalid - stage settings are wrong'.red }
   }
   if (!_.isEqual(envMap[prodAccount], prodMap)) {
     const d = diff.diffChars(JSON.stringify(envMap[prodAccount]), JSON.stringify(prodMap));
@@ -36,7 +36,7 @@ const checkMappings = (json) => {
       process.stderr.write(part.value[color]);
     });
     process.stderr.write('\n');
-    return { message: "Mappings invalid - prod settings are wrong" }
+    return { message: 'Mappings invalid - prod settings are wrong'.red }
 }
   return {};
 }
@@ -69,7 +69,7 @@ const runChecks = (name, resource, pattern, json) => {
   })
   if (filteredNames.length > 0) {
     if (!checkType(name, filteredNames, Resources)) {
-      return { message: `Invalid ${ name } type`};
+      return { message: `Invalid ${ name } type`.red};
     }
     cp = checkProps(name, filteredNames, Resources);
     if (typeof cp !== null) {
@@ -96,7 +96,7 @@ const checkProps = (resource, names, resources) => {
     const keys = Object.keys(resources[key].Properties);
     keys.forEach((key, val) => {
       if (!_.includes(props, key)) {
-        result = { message: `Invalid ${ resource } key: ${ key }`};
+        result = { message: `Invalid ${ resource } key: ${ key }`.red};
       }
     });
     if (result && result.message) return result;
@@ -106,7 +106,7 @@ const checkProps = (resource, names, resources) => {
         console.log(is);
         console.log('required fields:'.red);
         console.log(required);
-        result = { message: `Missing required ${ resource } keys`};
+        result = { message: `Missing required ${ resource } keys`.red};
     }
   });
   return result;
