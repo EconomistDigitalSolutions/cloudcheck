@@ -6,8 +6,8 @@ easily missed and you won't know until stack build time.
 
 You can see how wanting the basic tools are:
 
-```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
-```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
+* ```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
+* ```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
 
 ...which both report the template with an invalid property name as being invalid.
 
