@@ -10,6 +10,7 @@ The package does a number of things so far:
 matches a structure contained in ```config.json```. This file also indicates patterns used in the provided template to delineate specific AWS resources.
 * Checks the ```Properties``` section for each
 resource to ensure the property names are valid.
+* Check the ```Properties``` section for each resource to ensure any required properties are present.
 
 #### SETUP
 
@@ -30,6 +31,7 @@ resource to ensure the property names are valid.
 * ```npm run check samples/invalid/template-invalid-lambda-prop1.yml```
 * ```npm run check samples/invalid/template-invalid-lambda-prop2.yml```
 * ```npm run check samples/invalid/template-invalid-lambda-type.yml```
+* ```npm run check samples/invalid/template-invalid-lambda-missing-prop.yml```
 
 #### TODO
 
