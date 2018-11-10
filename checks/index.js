@@ -3,8 +3,11 @@ const diff = require('diff');
 const fs = require('fs');
 const colours = require('colours');
 
-const config = require('../config.json');
 const types = require('./types');
+
+let configFile = process.argv[3] || '../config.json';
+   
+const config = require(configFile);
 
 const checkMappings = (json) => {
   const {
@@ -64,6 +67,28 @@ const checkSQS = (json) => {
   return {};
 }
 
+const checkCloudWatch = (json) => {
+  const { CloudWatch } = config.resourcePatterns;
+  const pattern = new RegExp(CloudWatch);
+  const { Resources } = json;
+  let filteredNames = [];
+  Object.keys(Resources).forEach((key, val) => {
+    if(pattern.test(key)) {
+      filteredNames.push(key);
+    }
+  })
+  if (filteredNames.length > 0) {
+    if (!checkType('cloudwatch', filteredNames, Resources)) {
+      return { message: 'Invalid CloudWatch type'};
+    }
+    cp = checkProps('cloudwatch', filteredNames, Resources);
+    if (typeof cp !== null) {
+      return cp;
+    }
+  }
+  return {};
+}
+
 const checkType = (resource, names, resources) => {
   let valid = true;
   names.forEach((key, val) => {
@@ -96,6 +121,11 @@ const checkTransform = (json) => {
   return Transform != HeaderTransform ? result : {}
 }
 
-const checks = [checkTransform, checkMappings, checkSQS];
+const checks = [
+  checkTransform,
+  checkMappings,
+  checkSQS,
+  checkCloudWatch
+];
 
 module.exports = { checks };

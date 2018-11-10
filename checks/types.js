@@ -15,6 +15,21 @@ const types = {
             "Tags",
             "VisibilityTimeout"
         ]
+    },
+    cloudwatch: {
+        Type: "AWS::CloudWatch::Alarm",
+        props: [
+            "Namespace",
+            "MetricName",
+            "Dimensions",
+            "Statistic",
+            "Period",
+            "EvaulationPeriods",
+            "Threshold",
+            "ComparisonOperator",
+            "AlarmActions",
+            "InsufficientDataActions"
+        ]
     }
 }
 
