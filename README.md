@@ -6,7 +6,7 @@ easily missed and you won't know until stack build time.
 
 #### SETUP
 
-* Install [cfn-flip] which is a Python command that flips a YAML template into a JSON version.
+* Install [cfn-flip](https://github.com/awslabs/aws-cfn-template-flip) which is a Python command that flips a YAML template into a JSON version.
 * Run ```npm install```.
 
 #### TEST PAYLOADS
