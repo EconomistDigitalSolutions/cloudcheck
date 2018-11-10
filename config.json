@@ -1,0 +1,29 @@
+{
+    "stageAccount": "680545668187",
+    "prodAccount": "496098006106",
+    "stageMap": {
+        "environment": "stage",
+        "vpc": "vpc-d375eab6",
+        "shortCode": "s",
+        "elbSubnets": "subnet-39a46312,subnet-35da6142,subnet-e74068be",
+        "ec2Subnets": "subnet-24a4630f,subnet-37da6140,subnet-e24068bb",
+        "keyName": "suse1",
+        "sourceVpce": "vpce-b1ec28d8",
+        "version": "v1",
+        "splunkIndex": "stage"
+    },
+    "prodMap": {
+        "environment": "prod",
+        "vpc": "vpc-0173ec64",
+        "shortCode": "p",
+        "elbSubnets": "subnet-8bdb60fc,subnet-e5a562ce",
+        "ec2Subnets": "subnet-e7a562cc,subnet-89db60fe",
+        "keyName": "puse1",
+        "sourceVpce": "vpce-2250944b",
+        "version": "v1",
+        "splunkIndex": "main"
+    },
+    "resourcePatterns": {
+        "SQS": "^.+DeadLetter$"
+    }
+}
