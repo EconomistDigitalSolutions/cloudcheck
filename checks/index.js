@@ -121,7 +121,6 @@ const checkTransform = (json) => {
 
 const checks = [
   checkTransform,
-  checkMappings,
   checkSQS,
   checkCloudWatch,
   checkLambda
