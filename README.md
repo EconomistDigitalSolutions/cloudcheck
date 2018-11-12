@@ -14,7 +14,7 @@ You can see how wanting the basic tools are:
 The package does a number of things so far:
 
 * Checks the ```Mappings``` section to ensure it
-matches a structure contained in ```config.json```. This file also indicates patterns used in the provided template to delineate specific AWS resources.
+matches a structure contained in ```config.json```. This file also indicates patterns used in the provided template to delineate specific AWS resources - currently disabled as not sure of the value right now as mappings differ so widely.
 * Checks the ```Properties``` section for each
 resource to ensure the property names are valid.
 * Check the ```Properties``` section for each resource to ensure any required properties are present.
