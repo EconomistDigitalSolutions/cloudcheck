@@ -4,15 +4,14 @@ A package for checking validity of AWS SAM templates. Tools exist to validate th
 
 You can see how wanting the basic tools are:
 
-```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
-```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
+* ```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
+* ```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
 
 ...which both report the template with an invalid property name as being invalid.
 
 The package does a number of things so far:
 
-* Checks the ```Properties``` section for each
-resource to ensure the property names are valid.
+* Checks the ```Properties``` section for each resource to ensure the property names are valid.
 * Check the ```Properties``` section for each resource to ensure any required properties are present.
 
 ### CONFIGURATION
@@ -26,11 +25,10 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 * Install [cfn-flip](https://github.com/awslabs/aws-cfn-template-flip) which is a Python command that flips a YAML template into a JSON version.
 * Run ```npm install```.
 
-#### TEST PAYLOADS
+#### TEST PAYLOADS (EXAMPLES)
 
 * ```npm run check samples/invalid/template-invalid-transform.json```
 * ```npm run check samples/valid/template.yml```
-* ```npm run check samples/invalid/template-invalid-mappings.json```
 * ```npm run check samples/invalid/template-invalid-sqs-prop1.yml```
 * ```npm run check samples/invalid/template-invalid-sqs-prop2.yml```
 * ```npm run check samples/invalid/template-invalid-sqs-type.yml```
@@ -42,7 +40,14 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 * ```npm run check samples/invalid/template-invalid-lambda-type.yml```
 * ```npm run check samples/invalid/template-invalid-lambda-missing-prop.yml```
 
+### SUPPORTED AWS RESOURCES
+
+* ```AWS::SQS::Queue```
+* ```AWS::Serverless::SimpleTable```
+* ```AWS::Serverless::Function```
+* ```AWS::CloudWatch::Alarm```
+
 #### TODO
 
-* Extend support to other AWS resource types.
-* Add tests.
+* Extend support to other AWS resource types
+* Add tests
