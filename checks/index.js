@@ -40,6 +40,12 @@ const checkSimpleTable = (json) => {
   return runChecks('simpleTable', SimpleTable, pattern, json) || {}; 
 }
 
+const checkAPI = (json) => {
+  const { API } = config.resourcePatterns;
+  const pattern = new RegExp(API);
+  return runChecks('api', API, pattern, json) || {}; 
+}
+
 const runChecks = (name, resource, pattern, json) => {
   const { Resources } = json;
   let filteredNames = [];
@@ -99,7 +105,8 @@ const checks = [
   checkSQS,
   checkCloudWatch,
   checkLambda,
-  checkSimpleTable
+  checkSimpleTable,
+  checkAPI
 ];
 
 module.exports = { checks };

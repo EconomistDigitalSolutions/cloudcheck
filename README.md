@@ -42,9 +42,15 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 
 ### SUPPORTED AWS RESOURCES
 
-* ```AWS::SQS::Queue```
+#### SAM RESOURCES
+
+* ```AWS::Serverless::Api```
 * ```AWS::Serverless::SimpleTable```
 * ```AWS::Serverless::Function```
+
+#### CLOUDFORMATION RESOURCES
+
+* ```AWS::SQS::Queue```
 * ```AWS::CloudWatch::Alarm```
 
 #### TODO

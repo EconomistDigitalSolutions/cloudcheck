@@ -87,6 +87,24 @@ const types = {
             'Tracing',
             'VpcConfig'    
         ]
+    },
+    api: {
+        Type: 'AWS::Serverless::Api',
+        required: [
+            'StageName'
+        ],
+        props: [
+            'Auth',
+            'BinaryMediaTypes',
+            'CacheClusterEnabled',
+            'CacheClusterSize',
+            'Cors',
+            'DefinitionUri',
+            'DefinitionBody',
+            'EndpointConfiguration',
+            'MethodSettings',
+            'Variables',
+        ]
     }
 }
 

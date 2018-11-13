@@ -1,8 +1,9 @@
 {
     "resourcePatterns": {
-        "SQS": "^.+DeadLetter$",
+        "SQS": "^.+Queue$",
         "CloudWatch": "^.+Alarm$",
         "Lambda": "^.+Lambda$",
-        "SimpleTable": "^.+SimpleTable$"
+        "SimpleTable": "^.+SimpleTable$",
+        "API": "^.+API$"
     }
 }
