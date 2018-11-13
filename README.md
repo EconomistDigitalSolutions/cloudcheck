@@ -15,6 +15,14 @@ The package does a number of things so far:
 resource to ensure the property names are valid.
 * Check the ```Properties``` section for each resource to ensure any required properties are present.
 
+### CONFIGURATION
+
+The codebase comes with a ```config.json``` file that specifies patterns to extract AWS resources according to a naming convention. If you want to supply your own config, supply that as the second argument to the command, for example:
+
+```npm run check <template> <config_path>```
+
+
+
 #### SETUP
 
 * Install [cfn-flip](https://github.com/awslabs/aws-cfn-template-flip) which is a Python command that flips a YAML template into a JSON version.
@@ -40,4 +48,3 @@ resource to ensure the property names are valid.
 
 * Extend support to other AWS resource types.
 * Add tests.
-* Make the config file location configurable.
