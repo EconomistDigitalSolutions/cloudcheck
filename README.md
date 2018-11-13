@@ -21,8 +21,6 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 
 ```npm run check <template> <config_path>```
 
-
-
 #### SETUP
 
 * Install [cfn-flip](https://github.com/awslabs/aws-cfn-template-flip) which is a Python command that flips a YAML template into a JSON version.
