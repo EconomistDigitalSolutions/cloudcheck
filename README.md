@@ -4,7 +4,7 @@ A package for checking validity of AWS SAM templates. Tools exist to validate th
 
 You can see how wanting the basic tools are:
 
-* ```aws cloudformation validate-template --template-body file://template-invalid-lambda-type.yml```
+* ```aws cloudformation validate-template --template-body file://samples/invalid/template-invalid-lambda-type.yml```
 * ```sam validate -t samples/invalid/template-invalid-lambda-type.yml```
 
 ...which both report the template with an invalid property name as being invalid.
