@@ -103,6 +103,7 @@ const types = {
             'DefinitionBody',
             'EndpointConfiguration',
             'MethodSettings',
+            'StageName',
             'Variables',
         ]
     }
