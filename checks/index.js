@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const diff = require('diff');
 const fs = require('fs');
-const colours = require('colours');
 
 const types = require('./types');
 
@@ -56,7 +55,7 @@ const runChecks = (name, resource, pattern, json) => {
   })
   if (filteredNames.length > 0) {
     if (!checkType(name, filteredNames, Resources)) {
-      return { message: `Invalid ${ name } type`.red};
+      return { message: `Invalid ${ name } type`};
     }
     cp = checkProps(name, filteredNames, Resources);
     if (typeof cp !== null) {
@@ -84,17 +83,17 @@ const checkProps = (resource, names, resources) => {
     const keys = Object.keys(resources[key].Properties);
     keys.forEach((key, val) => {
       if (!_.includes(props, key)) {
-        result = { message: `Invalid ${ resource } key: ${ key }`.red};
+        result = { message: `Invalid ${ resource } key: ${ key }`};
       }
     });
     if (result && result.message) return result;
     const is = _.intersectionWith(keys, required, _.isEqual);
     if (is.length != required.length) {
-        console.log('field supplied in template:'.green);
+        console.log('field supplied in template:');
         console.log(is);
-        console.log('required fields:'.red);
+        console.log('required fields:');
         console.log(required);
-        result = { message: `Missing required ${ resource } keys`.red};
+        result = { message: `Missing required ${ resource } keys`};
     }
   });
   return result;
@@ -109,4 +108,8 @@ const checks = [
   checkAPI
 ];
 
-module.exports = { checkTransform, checks };
+module.exports = {
+  checkTransform,
+  checkLambda,
+  checks
+};

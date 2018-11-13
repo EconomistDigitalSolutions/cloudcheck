@@ -1,5 +1,7 @@
 const fs = require('fs');
 const { exec } = require('child_process');
+const colours = require('colours');
+
 
 let path = process.argv[2];
    
@@ -19,17 +21,17 @@ fs.readFile(path, 'utf8', function (err, data) {
         console.log(err);
         return 
       }
-      /*fs.writeFile("./samples/cock.json", flipped, function(err) {
+      /*fs.writeFile("./samples/json.json", flipped, function(err) {
           if(err) {
             return console.log(err);
         }    
-      });*/ 
+      });*/
       const json = JSON.parse(flipped);
       checks.forEach((check,index )=> { 
         let result = check(json);
         if (result && result.message) {
           console.log('INVALID TEMPLATE');
-          console.log(result.message);
+          console.log(result.message.red);
         }        
       });  
     });
