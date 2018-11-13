@@ -19,6 +19,11 @@ fs.readFile(path, 'utf8', function (err, data) {
         console.log(err);
         return 
       }
+      /*fs.writeFile("./samples/cock.json", flipped, function(err) {
+          if(err) {
+            return console.log(err);
+        }    
+      });*/ 
       const json = JSON.parse(flipped);
       checks.forEach((check,index )=> { 
         let result = check(json);

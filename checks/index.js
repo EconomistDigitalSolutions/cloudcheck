@@ -109,4 +109,4 @@ const checks = [
   checkAPI
 ];
 
-module.exports = { checks };
+module.exports = checks;
