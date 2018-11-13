@@ -90,7 +90,7 @@ Resources:
               - "-"
               - !Sub ${AlarmTopicLambdaDLQ}
               - "-Arn"
-  EnvelopeFunction:
+  EnvelopeLambda:
     Type: 'AWS::Serverless::Function'
     FunctionName:
       Fn::Join:
