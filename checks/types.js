@@ -56,9 +56,7 @@ const types = {
         ],
         props: [
             'AutoPublishAlias',
-            'Code',
             'CodeUri',
-            'DeadLetterConfig',
             'DeadLetterQueue',
             'DeploymentPreference',
             'Description',
@@ -66,17 +64,19 @@ const types = {
             'Events',
             'FunctionName',
             'Handler',
+            'InlineCode',
             'KmsKeyArn',
             'MemorySize',
             'Policies',
-            'ReservedConcurrentExecutions',
             'Role',
+            'ReservedConcurrentExecutions',
             'Runtime',
             'Tags',
             'Timeout',
             'Tracing',
-            'TracingConfig',
             'VpcConfig'
+
+            
         ]
     }
 }

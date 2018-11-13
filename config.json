@@ -26,6 +26,6 @@
     "resourcePatterns": {
         "SQS": "^.+DeadLetter$",
         "CloudWatch": "^.+Alarm$",
-        "Lambda": "^.+Function"
+        "Lambda": "^.+Lambda"
     }
 }

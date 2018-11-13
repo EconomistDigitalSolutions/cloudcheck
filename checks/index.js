@@ -79,6 +79,7 @@ const runChecks = (name, resource, pattern, json) => {
 }
 
 const checkType = (resource, names, resources) => {
+
   let valid = true;
   names.forEach((key, val) => {
     if (resources[key].Type !== types[resource].Type) {
