@@ -63,8 +63,6 @@ const checkType = (resource, names, resources) => {
 
   let valid = true;
   names.forEach((key, val) => {
-    console.log(resources[key].Type);
-    console.log(types[resource].Type);
     if (resources[key].Type !== types[resource].Type) {
       valid = false;
     }
