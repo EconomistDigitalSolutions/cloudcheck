@@ -1,8 +1,6 @@
 ## CLOUDCHECK
 
-A package for checking validity of Content Platform SAM and CloudFormation templates. We have
-pre-commit hook checks to validate these templates on a basic level (YAML format etc) but typos in property names etc are costly as they are
-easily missed and you won't know until stack build time.
+A package for checking validity of AWS SAM templates. Tools exist to validate these templates on a basic level (YAML format etc) but typos in property names etc are costly as they are easily missed and you won't know until stack build time.
 
 You can see how wanting the basic tools are:
 
@@ -13,8 +11,6 @@ You can see how wanting the basic tools are:
 
 The package does a number of things so far:
 
-* Checks the ```Mappings``` section to ensure it
-matches a structure contained in ```config.json```. This file also indicates patterns used in the provided template to delineate specific AWS resources.
 * Checks the ```Properties``` section for each
 resource to ensure the property names are valid.
 * Check the ```Properties``` section for each resource to ensure any required properties are present.
@@ -44,5 +40,4 @@ resource to ensure the property names are valid.
 
 * Extend support to other AWS resource types.
 * Add tests.
-* Add as a pre-commit hook.
 * Make the config file location configurable.

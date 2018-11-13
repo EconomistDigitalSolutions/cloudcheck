@@ -48,6 +48,17 @@ const types = {
             'Unit'
         ]
     },
+    simpleTable: {
+        Type: 'AWS::Serverless::SimpleTable',
+        required: [],
+        props: [
+            'PrimaryKey',
+            'ProvisionedThroughput',
+            'SSESpecification',
+            'TableName',
+            'Tags'
+        ]
+    },
     lambda: {
         Type: 'AWS::Serverless::Function',
         required: [
@@ -74,9 +85,7 @@ const types = {
             'Tags',
             'Timeout',
             'Tracing',
-            'VpcConfig'
-
-            
+            'VpcConfig'    
         ]
     }
 }

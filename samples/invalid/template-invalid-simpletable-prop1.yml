@@ -50,6 +50,21 @@ Parameters:
     Default: AlarmTopicLambdaDLQ
     Description: Name of SNS topic topics for alarms to publish to
 Resources:
+  MySimpleTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: my-table
+      PrimaryKey:
+        Name: id
+        Type: String
+      ProvisionedOutput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      Tags:
+        Department: Engineering
+        AppType: Serverless
+      SSESpecification:
+        SSEEnabled: true
   EnvelopeSQSDeadLetter:
     Type: AWS::SQS::Queue
     Properties:
@@ -100,7 +115,7 @@ Resources:
               - "-"
               - !Sub ${AlarmTopicLambdaDLQ}
               - "-Arn"
-  EnvelopeFunction:
+  EnvelopeLambda:
     Type: 'AWS::Serverless::Function'
     FunctionName:
       Fn::Join:
