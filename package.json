@@ -7,6 +7,9 @@
     "url": "git://github.com/EconomistDigitalSolutions/cloudcheck.git"
   },
   "main": "index.js",
+  "bin": {
+    "cloudcheck": "./index.js"
+  },
   "scripts": {
     "check": "node index.js",
     "test": "./node_modules/mocha/bin/mocha"
