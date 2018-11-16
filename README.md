@@ -18,27 +18,28 @@ The package does a number of things so far:
 
 The codebase comes with a ```config.json``` file that specifies patterns to extract AWS resources according to a naming convention. If you want to supply your own config, supply that as the second argument to the command, for example:
 
-```npm run check <template> <config_path>```
+```cloudcheck <template> <config_path>```
 
 #### SETUP
 
 * Install [cfn-flip](https://github.com/awslabs/aws-cfn-template-flip) which is a Python command that flips a YAML template into a JSON version.
 * Run ```npm install```.
+* Run ```npm link```
 
 #### TEST PAYLOADS (EXAMPLES)
 
-* ```npm run check samples/invalid/template-invalid-transform.json```
-* ```npm run check samples/valid/template.yml```
-* ```npm run check samples/invalid/template-invalid-sqs-prop1.yml```
-* ```npm run check samples/invalid/template-invalid-sqs-prop2.yml```
-* ```npm run check samples/invalid/template-invalid-sqs-type.yml```
-* ```npm run check samples/invalid/template-invalid-cloudwatch-prop1.yml```
-* ```npm run check samples/invalid/template-invalid-cloudwatch-prop2.yml```
-* ```npm run check samples/invalid/template-invalid-cloudwatch-type.yml```
-* ```npm run check samples/invalid/template-invalid-lambda-prop1.yml```
-* ```npm run check samples/invalid/template-invalid-lambda-prop2.yml```
-* ```npm run check samples/invalid/template-invalid-lambda-type.yml```
-* ```npm run check samples/invalid/template-invalid-lambda-missing-prop.yml```
+* ```cloudcheck samples/invalid/template-invalid-transform.json```
+* ```cloudcheck samples/valid/template.yml```
+* ```cloudcheck samples/invalid/template-invalid-sqs-prop1.yml```
+* ```cloudcheck samples/invalid/template-invalid-sqs-prop2.yml```
+* ```cloudcheck samples/invalid/template-invalid-sqs-type.yml```
+* ```cloudcheck samples/invalid/template-invalid-cloudwatch-prop1.yml```
+* ```cloudcheck samples/invalid/template-invalid-cloudwatch-prop2.yml```
+* ```cloudcheck samples/invalid/template-invalid-cloudwatch-type.yml```
+* ```cloudcheck samples/invalid/template-invalid-lambda-prop1.yml```
+* ```cloudcheck samples/invalid/template-invalid-lambda-prop2.yml```
+* ```cloudcheck samples/invalid/template-invalid-lambda-type.yml```
+* ```cloudcheck samples/invalid/template-invalid-lambda-missing-prop.yml```
 
 ### SUPPORTED AWS RESOURCES
 
