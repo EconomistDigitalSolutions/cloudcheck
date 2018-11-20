@@ -4,9 +4,11 @@ const fs = require('fs');
 
 const types = require('./types');
 
-let configFile = process.argv[3] || '../config.json';
-   
-const config = require(configFile);
+let config = {};
+
+const bootChecks = (file) => {
+  config = file;
+}
 
 const checkTransform = (json) => {
   const HeaderTransform = 'AWS::Serverless-2016-10-31';
@@ -111,5 +113,6 @@ const checks = [
 module.exports = {
   checkTransform,
   checkLambda,
-  checks
+  checks,
+  bootChecks
 };

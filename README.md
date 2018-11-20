@@ -18,7 +18,7 @@ The package does a number of things so far:
 
 The codebase comes with a ```config.json``` file that specifies patterns to extract AWS resources according to a naming convention. If you want to supply your own config, supply that as the second argument to the command, for example:
 
-```cloudcheck <template> <config_path>```
+```cloudcheck --path=<template> --config=<config_path>```
 
 #### SETUP
 
@@ -28,18 +28,18 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 
 #### TEST PAYLOADS (EXAMPLES)
 
-* ```cloudcheck samples/invalid/template-invalid-transform.json```
-* ```cloudcheck samples/valid/template.yml```
-* ```cloudcheck samples/invalid/template-invalid-sqs-prop1.yml```
-* ```cloudcheck samples/invalid/template-invalid-sqs-prop2.yml```
-* ```cloudcheck samples/invalid/template-invalid-sqs-type.yml```
-* ```cloudcheck samples/invalid/template-invalid-cloudwatch-prop1.yml```
-* ```cloudcheck samples/invalid/template-invalid-cloudwatch-prop2.yml```
-* ```cloudcheck samples/invalid/template-invalid-cloudwatch-type.yml```
-* ```cloudcheck samples/invalid/template-invalid-lambda-prop1.yml```
-* ```cloudcheck samples/invalid/template-invalid-lambda-prop2.yml```
-* ```cloudcheck samples/invalid/template-invalid-lambda-type.yml```
-* ```cloudcheck samples/invalid/template-invalid-lambda-missing-prop.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-transform.json```
+* ```cloudcheck --path=samples/valid/template.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-sqs-prop1.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-sqs-prop2.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-sqs-type.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-cloudwatch-prop1.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-cloudwatch-prop2.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-cloudwatch-type.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-lambda-prop1.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-lambda-prop2.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-lambda-type.yml```
+* ```cloudcheck --path=samples/invalid/template-invalid-lambda-missing-prop.yml```
 
 ### SUPPORTED AWS RESOURCES
 
@@ -57,4 +57,4 @@ The codebase comes with a ```config.json``` file that specifies patterns to extr
 #### TODO
 
 * Extend support to other AWS resource types
-* Add tests
+* Add more tests

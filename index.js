@@ -3,22 +3,33 @@
 const fs = require('fs');
 const { exec } = require('child_process');
 const colours = require('colours');
+const commandLineArgs = require('command-line-args');
 
+const optionDefinitions = [
+  { name: 'path', alias: 'p', type: String },
+  { name: 'config', alias: 'c', type: String, defaultOption: '../config.json' }
+]
 
-let path = process.argv[2];
-   
-if (!path) {
+const options = commandLineArgs(optionDefinitions);
+
+if (!options.path) {
   console.log('please provide a path to the template');
   process.exit();
 }
 
-const { checks } = require('./checks');
+const cfgOption = options.config || './config.json';
 
-fs.readFile(path, 'utf8', function (err, data) {
+const config = require(cfgOption);
+
+const { bootChecks, checks } = require('./checks');
+
+bootChecks(config);
+
+fs.readFile(options.path, 'utf8', function (err, data) {
     if (err) {
       return console.log(err);
     }
-    exec(`cfn-flip -j ${ path }`, (err, flipped) => {
+    exec(`cfn-flip -j ${ options.path }`, (err, flipped) => {
       if (err) {
         console.log(err);
         return 
